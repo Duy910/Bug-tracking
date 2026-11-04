@@ -1,5 +1,45 @@
 # Bug tracker – Media tool (X / Facebook / TikTok)
 
+## Trang web (Vercel)
+
+Đây là trang web nhỏ (Next.js) để báo bug, xem bảng trạng thái và cập nhật tiến độ. Vào trang phải nhập **mật khẩu chung**, mật khẩu được kiểm tra trên server. Dữ liệu được lưu vào **GitHub Issues** của repo này.
+
+### Deploy lên Vercel
+1. Đăng nhập https://vercel.com bằng tài khoản GitHub, chọn **Add New → Project** rồi **Import** repo `Duy910/Bug-tracking`.
+2. Trước khi bấm Deploy, mở **Environment Variables** và thêm:
+
+   | Tên | Giá trị |
+   |---|---|
+   | `APP_PASSWORD` | Mật khẩu chung để vào trang. Chỉ báo cho người trong team |
+   | `TEAM_MEMBERS` | Tên GitHub các thành viên, cách nhau dấu phẩy, ví dụ `Duy910,ten-github-cua-ban` |
+   | `GITHUB_REPO` | `Duy910/Bug-tracking` |
+   | `GITHUB_TOKEN` | Token GitHub, xem cách tạo bên dưới |
+
+3. Bấm **Deploy**. Vercel sẽ cho bạn một link, ví dụ `https://bug-tracking-xxx.vercel.app`.
+
+Nếu bỏ trống `GITHUB_REPO` và `GITHUB_TOKEN`, trang chạy **chế độ demo**: có sẵn bug mẫu, nhưng dữ liệu mất khi server khởi động lại.
+
+### Tạo GITHUB_TOKEN
+GitHub → ảnh đại diện → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**:
+- **Repository access**: Only select repositories → `Bug-tracking`
+- **Permissions**: **Issues**: Read and write, **Contents**: Read and write (để lưu ảnh chụp)
+- Copy token và dán thẳng vào Vercel. Không gửi token qua chat hay commit vào code.
+
+### Chạy thử trên máy
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
+Rồi mở http://localhost:3000. Mật khẩu thử nằm trong `.env.local`.
+
+### Mở rộng
+Sửa `lib/config.js`: đổi `enabled: true` để bật Facebook, TikTok hoặc loại việc mới, hoặc thêm một dòng mới.
+
+---
+
+## Dùng thẳng trên GitHub (không cần trang web)
+
 Quản lý bug bằng **GitHub Issues** trong một **repo riêng tư (private)**.
 Chỉ người được mời mới xem được. Muốn vào thì phải đăng nhập GitHub, và đó chính là bước "xác nhận mật khẩu".
 
