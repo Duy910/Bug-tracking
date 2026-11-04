@@ -4,11 +4,12 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { COOKIE, checkPassword, signSession } from "@/lib/auth";
-import { currentUser } from "@/lib/session";
+import { currentUser, NAME_COOKIE } from "@/lib/session";
 import { store } from "@/lib/store";
-import { PLATFORMS, TYPES, STATUSES, PRIORITIES, byId, enabled, teamMembers } from "@/lib/config";
+import { PLATFORMS, TYPES, STATUSES, PRIORITIES, byId, enabled, teamMembers, loginEnabled } from "@/lib/config";
 
 export async function login(_prev, form) {
+  if (!loginEnabled()) redirect("/");
   if (!process.env.APP_PASSWORD) return { error: "Server chưa cài mật khẩu (biến APP_PASSWORD)." };
   const name = String(form.get("name") || "");
   if (!teamMembers().includes(name)) return { error: "Hãy chọn tên của bạn." };
@@ -21,6 +22,13 @@ export async function login(_prev, form) {
     maxAge: 60 * 60 * 24 * 30,
   });
   redirect("/");
+}
+
+export async function pickName(form) {
+  const name = String(form.get("name") || "");
+  if (!teamMembers().includes(name)) return;
+  (await cookies()).set(NAME_COOKIE, name, { sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 365 });
+  revalidatePath("/", "layout");
 }
 
 export async function logout() {

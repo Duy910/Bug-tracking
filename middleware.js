@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { COOKIE, verifySession } from "./lib/auth";
+import { loginEnabled } from "./lib/config";
 
 // Mọi trang (trừ trang đăng nhập) đều yêu cầu mật khẩu.
 export async function middleware(request) {
+  if (!loginEnabled()) return NextResponse.next();
   const name = await verifySession(request.cookies.get(COOKIE)?.value);
   if (name) return NextResponse.next();
 

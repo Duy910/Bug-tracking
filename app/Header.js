@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { logout } from "./actions";
+import NamePicker from "./NamePicker";
 import { currentUser } from "@/lib/session";
 import { isDemo } from "@/lib/store";
+import { loginEnabled, teamMembers } from "@/lib/config";
 
 export default async function Header() {
   const user = await currentUser();
+  const login = loginEnabled();
   return (
     <>
       {isDemo() && (
@@ -19,10 +22,16 @@ export default async function Header() {
           </Link>
           <nav>
             <Link href="/new" className="btn primary">+ Báo bug</Link>
-            <span className="who">{user}</span>
-            <form action={logout}>
-              <button className="btn ghost" type="submit">Đăng xuất</button>
-            </form>
+            {login ? (
+              <>
+                <span className="who">{user}</span>
+                <form action={logout}>
+                  <button className="btn ghost" type="submit">Đăng xuất</button>
+                </form>
+              </>
+            ) : (
+              <NamePicker members={teamMembers()} current={user} />
+            )}
           </nav>
         </div>
       </header>
