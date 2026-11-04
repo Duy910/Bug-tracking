@@ -1,0 +1,76 @@
+name: "🐞 Bug UI/UX – X"
+description: Báo lỗi giao diện / trải nghiệm người dùng trên nền tảng X
+title: "[X][UI/UX] "
+labels: ["nền tảng: X", "loại: UI/UX"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã báo lỗi. Điền càng rõ thì sửa càng nhanh.
+        **Ảnh chụp màn hình:** dán (Ctrl+V) hoặc kéo thả thẳng vào ô "Ảnh chụp / video" bên dưới.
+
+  - type: input
+    id: man-hinh
+    attributes:
+      label: Màn hình / vị trí bị lỗi
+      description: Lỗi nằm ở đâu trong tool?
+      placeholder: "VD: Trang soạn bài đăng X > nút Lên lịch"
+    validations:
+      required: true
+
+  - type: textarea
+    id: mo-ta
+    attributes:
+      label: Mô tả lỗi
+      description: Bạn thấy gì sai?
+      placeholder: "VD: Nút Lên lịch bị che mất một nửa khi cửa sổ hẹp hơn 1280px"
+    validations:
+      required: true
+
+  - type: textarea
+    id: cac-buoc
+    attributes:
+      label: Các bước tái hiện
+      placeholder: |
+        1. Mở trang soạn bài đăng X
+        2. Thu nhỏ cửa sổ trình duyệt
+        3. Nhìn vào góc phải dưới
+    validations:
+      required: true
+
+  - type: textarea
+    id: mong-doi
+    attributes:
+      label: Kết quả mong đợi
+      placeholder: "VD: Nút Lên lịch hiển thị đầy đủ và bấm được"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: uu-tien
+    attributes:
+      label: Mức độ ưu tiên
+      options:
+        - "Khẩn cấp – chặn công việc"
+        - "Cao"
+        - "Trung bình"
+        - "Thấp"
+      default: 2
+    validations:
+      required: true
+
+  - type: input
+    id: thiet-bi
+    attributes:
+      label: Thiết bị / trình duyệt
+      placeholder: "VD: Windows 10, Chrome 130, màn hình 1366x768"
+    validations:
+      required: false
+
+  - type: textarea
+    id: anh-chup
+    attributes:
+      label: Ảnh chụp / video
+      description: Dán hoặc kéo thả ảnh, video vào đây.
+    validations:
+      required: false
